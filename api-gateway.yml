@@ -1,0 +1,24 @@
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      routes:
+        - id: authentication-service-module
+          uri: lb://authentication-service
+          predicates:
+            - Path=/auth-server/**
+        - id: book-service-module
+          uri: lb://book-service
+          predicates:
+            - Path=/book-service/**
+        - id: inventory-service-module
+          uri: lb://book-inventory
+          predicates:
+            - Path=/book-inventory/**
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    reactor.netty.http.client: DEBUG
